@@ -1,7 +1,7 @@
 #include "../headers/Functions.h"
 Command COMMANDS[] = {
 	{"say",&say,"say [args]. Says [args]"},
-	{"pong",&pong, "Pongs Server Don't Call"},
+	{"pong",&pong, "Don't call"},
 	{"quit",&quit, "Quits"},
 	{"list",&list, "List Commands"}
 };
@@ -10,7 +10,7 @@ void say(char *message)
 {
 	char buff[256];
 	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
-	printf("saying %s\n",buff);
+	printf("saying %s",buff);
 	sendToServer(buff);
 }
 void quit(char *ness)
@@ -31,10 +31,11 @@ void pong(char *arg)
 void list(char * ness)
 {
 	char buff[255];
-	for(int i = 0; i < sizeof(COMMANDS)/sizeof(COMMANDS[0]); i++)
+	int len = 0;
+	for(int i = 0; i < 4; i++)
 	{
-		sprintf(buff,"%d. %s: %s\n",i,COMMANDS[i].text,COMMANDS[i].description);
+		len += sprintf(buff+len,"%d. %s: %s\n",i,COMMANDS[i].text,COMMANDS[i].description);
 	}
-	sprintf(buff,"\r\n");
+	sprintf(buff+strlen(buff),"\r\n");
 	say(buff);
 }

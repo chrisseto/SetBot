@@ -2,7 +2,8 @@
 //TODO
 //Make functions more comprehensive
 //BeginLoop()
-
+//FIX ARG PARSING
+//cuts off at first space...
 void main(int argc, char *args[])
 {
 	if(connectToServer() < 1)

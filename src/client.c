@@ -52,7 +52,7 @@ int sendToServer(char* message)
 		printf("ERROR: Failed to write to socket %d\n",errno);
 		return -1;
 	}
-	free(message);
+	//free(message);
 	return 1;
 }
 int join()
