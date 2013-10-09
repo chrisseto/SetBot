@@ -1,6 +1,6 @@
 #include "../headers/config.h"
 const char* Server = "chat.freenode.net";
-//const int Port = 8000;
+const int Port = 8000;
 const char* NickName = "SetBot";
 const char* User = "SetBot MintTop none Irobot";
 const char* Pass = "none";
