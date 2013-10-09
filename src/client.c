@@ -78,7 +78,7 @@ void parse(char *msg)
 	chunk[1] = buff;
 	buff = strtok(NULL," ");
 	chunk[2] = buff;
-	buff = strtok(NULL,":\n");
+	buff = strtok(NULL,"\n");
 	if(buff != NULL)
 		chunk[3] = buff;
 
