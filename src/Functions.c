@@ -1,6 +1,6 @@
 #include "../headers/Functions.h"
 Command COMMANDS[] = {
-	{"say",&say,"say [args]. Says [args]"},
+	{"say",&say,"Says [args]"},
 	{"pong",&pong, "Don't call"},
 	{"quit",&quit, "Quits"},
 	{"list",&list, "List Commands"}
@@ -34,8 +34,8 @@ void list(char * ness)
 	int len = 0;
 	for(int i = 0; i < 4; i++)
 	{
-		len += sprintf(buff+len,"%d. %s: %s\n",i,COMMANDS[i].text,COMMANDS[i].description);
+		sprintf(buff,"%s: %s\r\n",COMMANDS[i].text,COMMANDS[i].description);
+		say(buff);
+		memset(buff,0,sizeof(buff));
 	}
-	sprintf(buff+strlen(buff),"\r\n");
-	say(buff);
 }

@@ -81,7 +81,6 @@ void parse(char *msg)
 	buff = strtok(NULL,"\n");
 	if(buff != NULL)
 		chunk[3] = buff;
-
 	if(!CONNECTED && strstr(chunk[1],"MODE"))
 	{
 		join();
@@ -89,7 +88,7 @@ void parse(char *msg)
 	}
 	if(strcmp(chunk[1],"PRIVMSG")==0)
 	{
-		if(chunk[3][0] == TRIGGER)
+		if(chunk[3][1] == TRIGGER)
 			if(DEBUG)
 				printf("found command! %s\n",chunk[3]);
 		parseUserCommand(chunk[3]);
@@ -124,7 +123,7 @@ int getNextLine()
 void parseUserCommand(char* args)
 {
 	char *command = strtok(args," ");
-	command++;
+	command+=2; //trims :[TRIGGER] leaving raw command and args
 	args = strtok(NULL," ");
 	for(int i = 0; i < 4; i++)
 	{
