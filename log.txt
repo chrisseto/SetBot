@@ -1,3 +1,0 @@
-:asimov.freenode.net NOTICE * :*** Looking up your hostname...
-:asimov.freenode.net NOTICE * :*** Checking Ident
-:asimov.freenode.net NOTICE * :*** Found your hostname
