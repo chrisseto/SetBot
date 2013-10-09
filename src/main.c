@@ -1,7 +1,5 @@
 #include "../headers/client.h"
 //TODO
-//move sok into client.c to be static
-//ie getNextLine()
 //Make functions more comprehensive
 //BeginLoop()
 

@@ -126,26 +126,9 @@ void parseUserCommand(char* args)
 	char *command = strtok(args," ");
 	command++;
 	args = strtok(NULL," ");
-	printf("%s %s\n",command,args);
-	if(strcmp(command,"say")==0)
+	for(int i = 0; i < 4; i++)
 	{
-		say(args);
+		if(strcmp(COMMANDS[i].text,command)==0)
+			COMMANDS[i].func(args);
 	}
-	if(strcmp(command,"quit")==0)
-	{
-		quit(NULL);
-	}
-}
-
-
-int disconnect()
-{
-	
-}
-int changeNick(char* nick)
-{
-}
-int joinChannel(char* channel)
-{
-	
 }
