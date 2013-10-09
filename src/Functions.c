@@ -1,7 +1,11 @@
 #include "../headers/Functions.h"
 Command COMMANDS[] = {
-	(Command){.text = "say", .func = &say}
+	{"say",&say,"say [args]. Says [args]"},
+	{"pong",&pong, "Pongs Server Don't Call"},
+	{"quit",&quit, "Quits"},
+	{"list",&list, "List Commands"}
 };
+
 void say(char *message)
 {
 	char buff[256];
@@ -17,4 +21,20 @@ void quit(char *ness)
 	sendToServer(buff);
 	CONNECTED=0;
 	QUIT=1;
+}
+void pong(char *arg)
+{
+	char buff[strlen(arg)+5];
+	sprintf(buff,"PONG %s",arg);
+	say(buff);
+}
+void list(char * ness)
+{
+	char buff[255];
+	for(int i = 0; i < sizeof(COMMANDS)/sizeof(COMMANDS[0]); i++)
+	{
+		sprintf(buff,"%d. %s: %s\n",i,COMMANDS[i].text,COMMANDS[i].description);
+	}
+	sprintf(buff,"\r\n");
+	say(buff);
 }

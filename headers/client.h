@@ -18,10 +18,9 @@ int connectToServer();
 void makeConnectionPhrase(char* buff);
 int getNextLine();
 //Non exposed methods
-static int sendToServer(char* message);
+int sendToServer(char* message);
 int join();
-void pong();
 int getline();
-void say(char *message);
-int QUIT=0;
+static int QUIT = 0;
+static int CONNECTED = 0;
 #endif

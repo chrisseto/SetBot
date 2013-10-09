@@ -4,26 +4,13 @@
 Contains methods to connect to an Irc server and interact with it
 C Sockets- Literally Hitler*/
 
-const char* COMMAND_STRINGS[] = {
-	"PRIVMSG", //0
-	"PASS", //1
-	"NICK", //2
-	"USER", //3
-	"PING", //4
-	"PONG", //5
-	"JOIN", //6
-	"QUIT" //7
-};
-const char* ALLOWEDUSERS[] = {
-	"SetBack"
-};
+
 static int sock;
 
 int connectToServer()
 {	
 	struct sockaddr_in server;
 	struct hostent *host;
-	//Add Check for host
 	host = gethostbyname(Server);
 	if(host == NULL)
 	{
@@ -65,6 +52,7 @@ int sendToServer(char* message)
 		printf("ERROR: Failed to write to socket %d\n",errno);
 		return -1;
 	}
+	free(message);
 	return 1;
 }
 int join()
@@ -109,7 +97,7 @@ void parse(char *msg)
 	}
 	if(strcmp(chunk[0], COMMAND_STRINGS[5])==0)
 	{
-		pong();
+		pong(chunk[3]);
 	}
 }
 int getNextLine()
@@ -145,11 +133,8 @@ void parseUserCommand(char* args)
 	}
 	if(strcmp(command,"quit")==0)
 	{
-		quit();
+		quit(NULL);
 	}
-}
-void pong()
-{
 }
 
 
