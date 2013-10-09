@@ -122,7 +122,7 @@ int getNextLine()
 }
 void parseUserCommand(char* args)
 {
-	char *command = strtok(args," ");
+	char *command = strtok(args," "); //FIX ME IM A DICK AND CUT OFF ALL THE SPACES
 	command+=2; //trims :[TRIGGER] leaving raw command and args
 	args = strtok(NULL," ");
 	for(int i = 0; i < 4; i++)
