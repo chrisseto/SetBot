@@ -35,7 +35,7 @@ void list(char * ness)
 {
 	char *buff=malloc(255);
 	int len = 0;
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
 		sprintf(buff,"%s: %s\r\n",COMMANDS[i].text,COMMANDS[i].description);
 		say(buff);
