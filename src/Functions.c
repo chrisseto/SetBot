@@ -31,7 +31,7 @@ void pong(char *arg)
 }
 void list(char * ness)
 {
-	char buff[255];
+	char *buff=malloc(255);
 	int len = 0;
 	for(int i = 0; i < 4; i++)
 	{
@@ -39,6 +39,7 @@ void list(char * ness)
 		say(buff);
 		memset(buff,0,sizeof(buff));
 	}
+	free(buff);
 }
 void rpn(char* args)
 {

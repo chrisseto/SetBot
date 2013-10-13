@@ -2,12 +2,12 @@
 const char* Server = "chat.freenode.net";
 const int Port = 8000;
 const char* NickName = "SetBot";
-const char* User = "SetBot MintTop none Irobot";
+const char* User = "SetBot SetBot SetBot SetBot";
 const char* Pass = "none";
 const char* Channel = "#wutwut";
 const int DEBUG = 1;
 const extern char* ALLOWEDUSERS[];
-const char TRIGGER = ']';
+const char TRIGGER = '!';
 const char* COMMAND_STRINGS[] = {
 	"PRIVMSG", //0
 	"PASS", //1
