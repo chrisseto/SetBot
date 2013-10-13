@@ -1,11 +1,10 @@
 #include "../headers/Functions.h"
 Command COMMANDS[] = {
 	{"say",&say,"Says [args]"},
-	{"pong",&pong, "Don't call"},
 	{"quit",&quit, "Quits"},
 	{"list",&list, "List Commands"}
 };
-
+short COMMAND_LENGTH = 3; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 void say(char *message)
 {
 	char buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1];

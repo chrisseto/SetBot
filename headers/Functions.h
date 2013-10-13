@@ -22,6 +22,7 @@ typedef struct USER
 	BOT_ACCESS access;
 } USER;
 extern Command COMMANDS[];
+extern short COMMAND_LENGTH; //Laziness is bestness
 void say(char *args);
 void quit(char *args);
 void list(char *args);
