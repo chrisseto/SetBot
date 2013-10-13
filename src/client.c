@@ -119,6 +119,7 @@ int getNextLine()
 			i++;
 		}
 	}
+	//This function needs to be more refined
 	printf("Read 0 bytes from socket,Something went wrong\n");
 	return -1;
 }
@@ -128,11 +129,10 @@ void parseUserCommand(char* args)
 	//memset(backup,0,strlen(args)+1); Shouldn't be needed all space is being written too.
 	memcpy(backup,args,strlen(args)+1); //Could use strcpy here..... I might at some point in time
 	char *command = strtok(args," "); //FIX ME IM A DICK AND CUT OFF ALL THE SPACES
-	command+=2;
+	command+=2; //trims :[TRIGGER] leaving raw command
 	backup+=strlen(command)+3; //Removes :[TRIGGER][COMMAND][SPACE]
-	printf("Command %s Backup %s %d\n",command,backup,strlen(backup));
-	 //trims :[TRIGGER] leaving raw command
-	for(int i = 0; i < 4; i++) 
+	//printf("Command %s Backup %s %d\n",command,backup,strlen(backup)); Was for debugging Might add back in
+	for(int i = 0; i < 4; i++) //Yeah.... need to fix this sizes... Const int maybe? short would be a bit less over head
 	{
 		if(strcmp(COMMANDS[i].text,command)==0)
 		{
@@ -140,5 +140,5 @@ void parseUserCommand(char* args)
 			break;
 		}
 	}
-	free(backup-strlen(command)-3);
+	free(backup-strlen(command)-3); //Get the original pointer back to properly free() the memory
 }

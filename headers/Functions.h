@@ -8,6 +8,19 @@ typedef struct Command
 	BotCommand func;
 	char *description;
 } Command;
+typedef enum 
+{
+ALL,
+ELEVATED,
+GENERAL,
+LIMITED,
+NONE
+} BOT_ACCESS;
+typedef struct USER
+{
+	char *handle;
+	BOT_ACCESS access;
+} USER;
 extern Command COMMANDS[];
 void say(char *args);
 void quit(char *args);
@@ -16,5 +29,5 @@ void pong(char *args);
 void ping(char *args);
 void tribotjacking(char *args); //see below
 void rpn(char *args); //because why not
-//zombie mode
+//zombie mode see above
 #endif
