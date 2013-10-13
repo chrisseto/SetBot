@@ -8,7 +8,7 @@ Command COMMANDS[] = {
 
 void say(char *message)
 {
-	char buff[256];
+	char buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1];
 	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
 	printf("saying %s",buff);
 	sendToServer(buff);

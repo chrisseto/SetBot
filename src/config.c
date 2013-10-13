@@ -7,7 +7,7 @@ const char* Pass = "none";
 const char* Channel = "#wutwut";
 const int DEBUG = 1;
 const extern char* ALLOWEDUSERS[];
-const char TRIGGER = '>';
+const char TRIGGER = ']';
 const char* COMMAND_STRINGS[] = {
 	"PRIVMSG", //0
 	"PASS", //1

@@ -16,4 +16,5 @@ void pong(char *args);
 void ping(char *args);
 void tribotjacking(char *args); //see below
 void rpn(char *args); //because why not
+//zombie mode
 #endif

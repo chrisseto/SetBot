@@ -1,5 +1,5 @@
 #include "../headers/client.h"
-
+#include <stdlib.h>
 /*File client.c
 Contains methods to connect to an Irc server and interact with it
 C Sockets- Literally Hitler*/
@@ -39,7 +39,7 @@ int connectToServer()
 	sendToServer(buff);
 	printf("Connected!\n");
 	return 1;
-}
+} 
 void makeConnectionPhrase(char *buff)
 {
 	sprintf(buff,"PASS %s\r\nNICK %s\r\nUSER %s\r\n",Pass,NickName,User);
@@ -52,7 +52,6 @@ int sendToServer(char* message)
 		printf("ERROR: Failed to write to socket %d\n",errno);
 		return -1;
 	}
-	//free(message);
 	return 1;
 }
 int join()
@@ -89,9 +88,11 @@ void parse(char *msg)
 	if(strcmp(chunk[1],"PRIVMSG")==0)
 	{
 		if(chunk[3][1] == TRIGGER)
+		{
 			if(DEBUG)
 				printf("found command! %s\n",chunk[3]);
-		parseUserCommand(chunk[3]);
+			parseUserCommand(chunk[3]);
+		}
 			
 	}
 	if(strcmp(chunk[0], COMMAND_STRINGS[5])==0)
@@ -101,7 +102,8 @@ void parse(char *msg)
 }
 int getNextLine()
 {
-	char next,msg[551];
+	char next;
+	char msg[551];
 	int i = 0;
 	while(read(sock,&next,1)>0 && i < 551)
 	{
@@ -122,12 +124,21 @@ int getNextLine()
 }
 void parseUserCommand(char* args)
 {
+	char *backup = malloc(strlen(args)+1);
+	//memset(backup,0,strlen(args)+1); Shouldn't be needed all space is being written too.
+	memcpy(backup,args,strlen(args)+1); //Could use strcpy here..... I might at some point in time
 	char *command = strtok(args," "); //FIX ME IM A DICK AND CUT OFF ALL THE SPACES
-	command+=2; //trims :[TRIGGER] leaving raw command and args
-	args = strtok(NULL," ");
-	for(int i = 0; i < 4; i++)
+	command+=2;
+	backup+=strlen(command)+3; //Removes :[TRIGGER][COMMAND][SPACE]
+	printf("Command %s Backup %s %d\n",command,backup,strlen(backup));
+	 //trims :[TRIGGER] leaving raw command
+	for(int i = 0; i < 4; i++) 
 	{
 		if(strcmp(COMMANDS[i].text,command)==0)
-			COMMANDS[i].func(args);
+		{
+			COMMANDS[i].func(backup);
+			break;
+		}
 	}
+	free(backup-strlen(command)-3);
 }
