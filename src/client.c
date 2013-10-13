@@ -5,16 +5,20 @@ Contains methods to connect to an Irc server and interact with it
 C Sockets- Literally Hitler*/
 
 
-static int sock;
+static int sock; //The socket descriptor (gasp) no one else gets to see it
 
 int connectToServer()
 {	
+	//Yuck structs this was god awful
+	//People for Hitler Networking structs for me
+	//watch out [insert some ethnic group here]
 	struct sockaddr_in server;
 	struct hostent *host;
 	host = gethostbyname(Server);
+	//Null checks.... cause... you know
 	if(host == NULL)
 	{
-		printf("EROR: No such host\n");
+		printf("EROR: No such host\n"); //we dont need no errno
 		return 0;
 	}
 	memcpy(&server.sin_addr,host->h_addr_list[0],host->h_length);
@@ -24,7 +28,7 @@ int connectToServer()
 	//creating socket
 	sock = socket(AF_INET , SOCK_STREAM , 0);
 	if(sock < 0){
-		printf("ERROR: Could not open socket\n");
+		printf("ERROR: Could not open socket %d\n",errno);
 		return 0;
 	}
 	
@@ -34,7 +38,7 @@ int connectToServer()
 		return 0;
 	}
 	//Time to send Nick etc.
-	char buff[255];
+	char buff[255]; //This could be less but currently not an issue.... even worse could be more
 	makeConnectionPhrase(buff);
 	sendToServer(buff);
 	printf("Connected!\n");
@@ -42,9 +46,10 @@ int connectToServer()
 } 
 void makeConnectionPhrase(char *buff)
 {
+	//Pretty straight forward here
 	sprintf(buff,"PASS %s\r\nNICK %s\r\nUSER %s\r\n",Pass,NickName,User);
 }
-//Might add in check for valid socket later... might...
+//Might add in check for valid socket later... might... Or if connected.... yeah that could work
 int sendToServer(char* message)
 {
 	if(write(sock, message, strlen(message)) < 0)
@@ -56,7 +61,7 @@ int sendToServer(char* message)
 }
 int join()
 {
-	char buff[255];
+	char buff[255]; //This could also be smaller, unlike my friend group
 	sprintf(buff,"%s %s\r\n",COMMAND_STRINGS[6],Channel);
 	sendToServer(buff);
 	if(DEBUG)
@@ -64,11 +69,6 @@ int join()
 }
 void parse(char *msg)
 {
-
-	if(DEBUG)
-	{
-		printf("%s\n",msg);
-	}
 	char *buff;
 	char *chunk[5];
 	buff = strtok(msg," ");
@@ -87,7 +87,7 @@ void parse(char *msg)
 	}
 	if(strcmp(chunk[0],COMMAND_STRING[4])==0)
 	{
-		pong(chunk[1]);//This may be wrong... Will fix later
+		pong(chunk[1]);//This may be wrong... Will fix later (if broken)
 		if(DEBUG)
 			printf("PONG: %s",chunk[1]);
 	}

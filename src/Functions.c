@@ -2,9 +2,11 @@
 Command COMMANDS[] = {
 	{"say",&say,"Says [args]"},
 	{"quit",&quit, "Quits"},
-	{"list",&list, "List Commands"}
+	{"list",&list, "List Commands"},
+	{"roll",&roll, "Roll a dice with [args] sides"}
 };
 short COMMAND_LENGTH = 3; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
+//Make buffers with malloc and free <-TODO
 void say(char *message)
 {
 	char buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1];
@@ -38,3 +40,17 @@ void list(char * ness)
 		memset(buff,0,sizeof(buff));
 	}
 }
+void rpn(char* args)
+{
+	//There will be another c file for this let me tell you....
+}
+void roll(char* arg)
+{
+	srand(time(NULL)); //PLANT THE SEEDS
+	int num = rand() % atoi(arg); //Also Should work
+	char *buff = malloc(255);
+	sprintf(buff,"You Rolled %d",num);
+	say(buff);
+	free(buff);
+} 
+
