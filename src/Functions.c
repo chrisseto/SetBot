@@ -25,9 +25,10 @@ void quit(char *ness)
 }
 void pong(char *arg)
 {
-	char buff[strlen(arg)+5];
+	char *buff = malloc(strlen(arg)+6);
 	sprintf(buff,"PONG %s",arg);
-	say(buff);
+	sendtoserver(buff);
+	free(buff);
 }
 void list(char * ness)
 {

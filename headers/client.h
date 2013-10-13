@@ -13,11 +13,9 @@
 #include "../headers/config.h"
 extern const char* COMMAND_STRINGS[];
 
-//Exposed methods
 int connectToServer();
 void makeConnectionPhrase(char* buff);
 int getNextLine();
-//Non exposed methods
 int sendToServer(char* message);
 int join();
 int getline();

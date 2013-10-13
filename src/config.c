@@ -4,7 +4,7 @@ const int Port = 8000;
 const char* NickName = "SetBot";
 const char* User = "SetBot SetBot SetBot SetBot";
 const char* Pass = "none";
-const char* Channel = "#wutwut";
+const char* Channel = "#stap-dev";
 const int DEBUG = 1;
 const extern char* ALLOWEDUSERS[];
 const char TRIGGER = '!';
