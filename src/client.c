@@ -10,7 +10,7 @@ static int sock; //The socket descriptor (gasp) no one else gets to see it
 int connectToServer()
 {	
 	//Yuck structs this was god awful
-	//People for Hitler Networking structs for me
+	//People for Hitler, Networking structs for me
 	//watch out [insert some ethnic group here]
 	struct sockaddr_in server;
 	struct hostent *host;
@@ -65,7 +65,7 @@ int join()
 	sprintf(buff,"%s %s\r\n",COMMAND_STRINGS[6],Channel);
 	sendToServer(buff);
 	if(DEBUG)
-		printf("Sent join Command: %s",buff);
+		printf("Joining %s",Channel);
 }
 void parse(char *msg)
 {
@@ -93,6 +93,8 @@ void parse(char *msg)
 	}
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
+		char *nick = strtok(chunk[0],"!"); //Maybe Right... hmm
+		printf("%s: %s\n",nick,chunk[3]+1);
 		if(chunk[3][1] == TRIGGER)
 		{
 			if(DEBUG)

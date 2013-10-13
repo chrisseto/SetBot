@@ -11,7 +11,7 @@ void say(char *message)
 {
 	char buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1];
 	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
-	printf("saying %s",buff);
+	printf("saying %s",buff-2);
 	sendToServer(buff);
 }
 void quit(char *ness)
@@ -26,8 +26,8 @@ void quit(char *ness)
 void pong(char *arg)
 {
 	char *buff = malloc(strlen(arg)+6);
-	sprintf(buff,"PONG %s",arg);
-	sendtoserver(buff);
+	sprintf(buff,"PONG %s",arg+1);
+	sendToServer(buff);
 	free(buff);
 }
 void list(char * ness)
