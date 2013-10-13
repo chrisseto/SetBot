@@ -13,3 +13,4 @@ Start up interface? (non-graphical)
 Integrate lua
 clean up everything
 stream line everything
+learn vim
