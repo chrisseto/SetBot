@@ -41,7 +41,7 @@ int connectToServer()
 	char buff[255]; //This could be less but currently not an issue.... even worse could be more
 	makeConnectionPhrase(buff);
 	sendToServer(buff);
-	printf("Connected!\n");
+	printf("Connected to %s\n",Server);
 	return 1;
 } 
 void makeConnectionPhrase(char *buff)
@@ -65,7 +65,7 @@ int join()
 	sprintf(buff,"%s %s\r\n",COMMAND_STRINGS[6],Channel);
 	sendToServer(buff);
 	if(DEBUG)
-		printf("Joining %s",Channel);
+		printf("Joining %s\n",Channel);
 }
 void parse(char *msg)
 {
