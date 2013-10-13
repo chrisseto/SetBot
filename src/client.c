@@ -85,13 +85,13 @@ void parse(char *msg)
 		join();
 		CONNECTED = 1;
 	}
-	if(strcmp(chunk[0],COMMAND_STRING[4])==0)
+	if(strcmp(chunk[0],COMMAND_STRINGS[4])==0)
 	{
 		pong(chunk[1]);//This may be wrong... Will fix later (if broken)
 		if(DEBUG)
 			printf("PONG: %s",chunk[1]);
 	}
-	if(strcmp(chunk[1],COMMAND_STRING[0])==0)
+	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
 		if(chunk[3][1] == TRIGGER)
 		{

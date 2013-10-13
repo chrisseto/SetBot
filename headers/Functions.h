@@ -28,6 +28,7 @@ void quit(char *args);
 void list(char *args);
 void pong(char *args);
 void ping(char *args);
+void roll(char* arg);
 void tribotjacking(char *args); //see below
 void rpn(char *args); //because why not
 //zombie mode see above
