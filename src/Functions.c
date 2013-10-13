@@ -3,9 +3,10 @@ Command COMMANDS[] = {
 	{"say",&say,"Says [args]"},
 	{"quit",&quit, "Quits"},
 	{"list",&list, "List Commands"},
-	{"roll",&roll, "Roll a dice with [args] sides"}
+	{"roll",&roll, "Roll a dice with [args] sides"},
+	{"flip",&flip, "Flips a coin"}
 };
-short COMMAND_LENGTH = 3; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
+short COMMAND_LENGTH = 4; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 //Make buffers with malloc and free <-TODO
 void say(char *message)
 {
@@ -50,10 +51,34 @@ void rpn(char* args)
 void roll(char* arg)
 {
 	srand(time(NULL)); //PLANT THE SEEDS
-	int num = rand() % atoi(arg); //Also Should work
-	char *buff = malloc(255);
-	sprintf(buff,"You Rolled %d",num);
-	say(buff);
-	free(buff);
+	int num;
+	if((num = atoi(arg)) > 0)
+	{
+		int num = rand() % atoi(arg); //Also Should work
+		char *buff = malloc(255); + 1
+		sprintf(buff,"You Rolled %d",num);
+		say(buff);
+		free(buff);
+	}
+	else
+	{
+		char *buff = malloc(255);
+		sprintf(buff,"Roll requires a positive integer");
+		say(buff);
+		free(buff);
+	}
 } 
+void flip(char *ness)
+{
+	srand(time(NULL)); //PLANT THE SEEDS
+	int num;
+	if((num = rand() % 2 + 1) == 1)
+	{
+		say("Heads");
+	}
+	else
+	{
+		say("Tails");
+	}
+}
 

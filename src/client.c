@@ -41,7 +41,7 @@ int connectToServer()
 	char buff[255]; //This could be less but currently not an issue.... even worse could be more
 	makeConnectionPhrase(buff);
 	sendToServer(buff);
-	printf("Connected to %s\n",Server);
+	printf("Connected to %s:%d\n",Server,Port);
 	return 1;
 } 
 void makeConnectionPhrase(char *buff)
@@ -95,8 +95,6 @@ void parse(char *msg)
 		printf("%s: %s\n",nick,chunk[3]+1);
 		if(chunk[3][1] == TRIGGER)
 		{
-			if(DEBUG)
-				printf("found command! %s\n",chunk[3]);
 			parseUserCommand(chunk[3]);
 		}
 			
