@@ -92,7 +92,7 @@ void parse(char *msg)
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
 		char *nick = strtok(chunk[0],"!"); //Maybe Right... hmm
-		printf("%s: %s\n",nick,chunk[3]+1);
+		printf("%s: %s\n",nick,chunk[3]+2);
 		if(chunk[3][1] == TRIGGER)
 		{
 			parseUserCommand(chunk[3]);

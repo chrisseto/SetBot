@@ -4,6 +4,7 @@
 #include "../headers/Structs.h"
 #include "../headers/Variables.h"
 #include <stdlib.h>
+#include <time.h>
 
 extern Command COMMANDS[];
 extern short COMMAND_LENGTH; //Laziness is bestness

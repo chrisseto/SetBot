@@ -10,7 +10,8 @@
 #include <netinet/in.h>
 #include <error.h>
 #include <errno.h>
-#include  <netdb.h>
+#include <netdb.h>
+#include <unistd.h>
 
 extern const char* COMMAND_STRINGS[];
 
@@ -20,5 +21,6 @@ int getNextLine();
 int sendToServer(char* message);
 int join();
 int getline();
+void parseUserCommand(char* args);
 
 #endif
