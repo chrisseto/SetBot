@@ -1,6 +1,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include "../headers/client.h"
+#include "../headers/Structs.h"
+#include "../headers/Variables.h"
 #include <stdlib.h>
 
 extern Command COMMANDS[];
