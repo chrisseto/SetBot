@@ -8,7 +8,7 @@ Command COMMANDS[] = {
 	{"flip",&flip, "Flips a coin"},
 	{"Mine",&Mine, " "}
 };
-short COMMAND_LENGTH = 5; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
+short COMMAND_LENGTH = 6; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 //Make buffers with malloc and free <-TODO
 void say(char *message)
 {

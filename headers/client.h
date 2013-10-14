@@ -12,6 +12,7 @@
 #include "../headers/Functions.h"
 #include "../headers/config.h"
 extern const char* COMMAND_STRINGS[];
+const extern char* ALLOWEDUSERS[];
 
 int connectToServer();
 void makeConnectionPhrase(char* buff);

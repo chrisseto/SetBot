@@ -2,26 +2,7 @@
 #define FUNCTIONS_H
 #include "../headers/client.h"
 #include <stdlib.h>
-typedef void (*BotCommand)(char*);
-typedef struct Command
-{
-	char *text;
-	BotCommand func;
-	char *description;
-} Command;
-typedef enum 
-{
-ALL,
-ELEVATED,
-GENERAL,
-LIMITED,
-NONE
-} BOT_ACCESS;
-typedef struct USER
-{
-	char *handle;
-	BOT_ACCESS access;
-} USER;
+
 extern Command COMMANDS[];
 extern short COMMAND_LENGTH; //Laziness is bestness
 void say(char *args);
