@@ -7,8 +7,6 @@ const char* NickName = "SetBot";
 const char* User = "SetBot SetBot SetBot SetBot";
 const char* Pass = "none";
 const char* Channel = "#stap-dev";
-const int DEBUG = 1;
-
 const char TRIGGER = '!';
 
 USER ALLOWEDUSERS[] = {

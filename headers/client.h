@@ -20,6 +20,5 @@ int getNextLine();
 int sendToServer(char* message);
 int join();
 int getline();
-static int QUIT = 0;
-static int CONNECTED = 0;
+
 #endif
