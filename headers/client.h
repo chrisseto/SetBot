@@ -2,6 +2,7 @@
 #define CLIENT_H
 #include "../headers/Functions.h"
 #include "../headers/config.h"
+#include "../headers/Structs.h"
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -23,6 +24,6 @@ int getNextLine();
 int sendToServer(char* message);
 static int join();
 static int getline();
-static void parseUserCommand(char* args);
-
+static void parseUserCommand(char* args, char* user);
+BOT_ACCESS getUserControl(char *name);
 #endif

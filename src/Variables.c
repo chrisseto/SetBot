@@ -3,6 +3,7 @@
 int QUIT = 0;
 int CONNECTED = 0;
 const int DEBUG = 1;
+int INCHANNEL = 0;
 const char* COMMAND_STRINGS[] = {
 	"PRIVMSG", //0
 	"PASS", //1

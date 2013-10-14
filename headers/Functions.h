@@ -12,6 +12,7 @@ void say(char *args);
 void quit(char *args);
 void list(char *args);
 void pong(char *args);
+void getaccess(char *args);
 void ping(char *args);
 void roll(char *arg);
 void flip(char *args);

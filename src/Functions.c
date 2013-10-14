@@ -6,17 +6,17 @@ Command COMMANDS[] = {
 	{"list",&list, "List Commands",GENERAL},
 	{"roll",&roll, "Roll a dice with [args] sides",GENERAL},
 	{"flip",&flip, "Flips a coin",GENERAL},
-	{"Mine",&Mine, " ",ELEVATED}
+	{"Mine",&Mine, "",ELEVATED},
+	{"access",&getaccess,"Returns UAC",NONE}
 };
-short COMMAND_LENGTH = 6; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
+short COMMAND_LENGTH = 7; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 
 void say(char *message)
 {
-	char *buff = malloc(strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1);
+	char *buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
 	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
 	printf("%s: %s\n",NickName,message);
 	sendToServer(buff);
-	free(buff);
 }
 void quit(char *ness)
 {
@@ -38,14 +38,14 @@ void pong(char *arg)
 }
 void list(char * ness)
 {
-	char *buff=malloc(551); //Possible Overflow here....
+	char buff[551]; //Possible Overflow here.... also doesnt like malloc
 	int len = 0;
 	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
-		sprintf(buff,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
+		sprintf(buff + len,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
+		len+=(strlen(buff)-len); //Haha! clever math... also meta
 	}
 	say(buff);
-	free(buff);
 }
 void rpn(char* args)
 {
@@ -87,5 +87,30 @@ void flip(char *ness)
 void Mine(char *ness)
 {
 	say("Literally found Hitler");
+}
+void getaccess(char *arg)
+{
+	char *buff = malloc(256);
+	sprintf(buff,"%s: ",arg);
+	switch(getUserControl(arg))
+	{
+		case 0:
+			sprintf(buff+strlen(arg)+2,"NONE");
+			break;
+		case 1:
+			sprintf(buff+strlen(arg)+2,"LIMITED");
+			break;
+		case 2:
+			sprintf(buff+strlen(arg)+2,"GENERAL");
+			break;
+		case 3:
+			sprintf(buff+strlen(arg)+2,"ELEVATED");
+			break;
+		case 4:
+			sprintf(buff+strlen(arg)+2,"ALL");
+			break;
+	}
+	say(buff);
+	free(buff);
 }
 

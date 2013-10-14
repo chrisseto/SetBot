@@ -8,9 +8,9 @@ static int sock; //The socket descriptor (gasp) no one else gets to see it
 
 void IRCStart()
 {
-	if(connectToServer())
+	if(!connectToServer())
 		return;
-	while(getNextLine()) //Might update this so that msg is outside and just passed in as a buffer
+	while(CONNECTED && getNextLine()) //Might update this so that msg is outside and just passed in as a buffer
 	{
 	}
 	printf("Disconnected");
@@ -52,6 +52,7 @@ int connectToServer()
 	makeConnectionPhrase(buff);
 	sendToServer(buff);
 	printf("Connected to %s:%d\n",Server,Port);
+	CONNECTED = 1;
 	return 1;
 } 
 static void makeConnectionPhrase(char *buff)
@@ -90,10 +91,10 @@ static void parse(char *msg)
 	buff = strtok(NULL,"\n");
 	if(buff != NULL)
 		chunk[3] = buff;
-	if(!CONNECTED && strstr(chunk[1],"MODE"))
+	if(!INCHANNEL && strstr(chunk[1],"MODE"))
 	{
 		join();
-		CONNECTED = 1;
+		INCHANNEL = 1;
 	}
 	if(strcmp(chunk[0],COMMAND_STRINGS[4])==0)
 	{
@@ -102,10 +103,10 @@ static void parse(char *msg)
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
 		char *nick = strtok(chunk[0],"!"); //Maybe Right... hmm
-		printf("%s: %s\n",nick,chunk[3]+2); //Still in progress need to remove leading :
+		printf("%s: %s\n",nick+1,chunk[3]+1); //Still in progress need to remove leading :
 		if(chunk[3][1] == TRIGGER)
 		{
-			parseUserCommand(chunk[3]);
+			parseUserCommand(chunk[3],nick+1);
 		}
 			
 	}
@@ -124,8 +125,8 @@ int getNextLine()
 		if(next == '\n')
 		{
 			msg[i] = '\0';				
-			parse(&msg);
-			memset(msg,0,551);
+			parse(msg);
+			free(msg);
 			return 1;
 		}
 		else if(next != '\r')
@@ -139,7 +140,7 @@ int getNextLine()
 	printf("Read 0 bytes from socket,Something went wrong\n");
 	return -1;
 }
-static void parseUserCommand(char* args)
+static void parseUserCommand(char* args, char* user)
 {
 	char *backup = malloc(strlen(args)+1);
 	//memset(backup,0,strlen(args)+1); Shouldn't be needed all space is being written too.
@@ -148,13 +149,23 @@ static void parseUserCommand(char* args)
 	command+=2; //trims :[TRIGGER] leaving raw command
 	backup+=strlen(command)+3; //Removes :[TRIGGER][COMMAND][SPACE]
 	//printf("Command %s Backup %s %d\n",command,backup,strlen(backup)); Was for debugging Might add back in
-	for(int i = 0; i < 4; i++) //Yeah.... need to fix this sizes... Const int maybe? short would be a bit less over head
+	for(int i = 0; i < COMMAND_LENGTH; i++) //Yeah.... need to fix this sizes... Const int maybe? short would be a bit less over head
 	{
 		if(strcmp(COMMANDS[i].text,command)==0)
 		{
-			COMMANDS[i].func(backup);
+			if(getUserControl(user) >= COMMANDS[i].security)
+				COMMANDS[i].func(backup);
 			break;
 		}
 	}
 	free(backup-strlen(command)-3); //Get the original pointer back to properly free() the memory
+}
+BOT_ACCESS getUserControl(char *name)
+{
+	for(int i = 0; i < REGISTEREDUSERS; i++)
+	{
+		if(strcmp(ALLOWEDUSERS[i].handle,name))
+			return ALLOWEDUSERS[i].access;
+	}
+	return GENERAL;
 }
