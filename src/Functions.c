@@ -1,12 +1,14 @@
 #include "../headers/Functions.h"
+#include <stdlib.h>
 Command COMMANDS[] = {
 	{"say",&say,"Says [args]"},
 	{"quit",&quit, "Quits"},
 	{"list",&list, "List Commands"},
 	{"roll",&roll, "Roll a dice with [args] sides"},
-	{"flip",&flip, "Flips a coin"}
+	{"flip",&flip, "Flips a coin"},
+	{"Mine",&Mine, " "}
 };
-short COMMAND_LENGTH = 4; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
+short COMMAND_LENGTH = 5; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 //Make buffers with malloc and free <-TODO
 void say(char *message)
 {
@@ -55,7 +57,7 @@ void roll(char* arg)
 	if((num = atoi(arg)) > 0)
 	{
 		int num = rand() % atoi(arg); //Also Should work
-		char *buff = malloc(255); + 1
+		char *buff = malloc(255) + 1;
 		sprintf(buff,"You Rolled %d",num);
 		say(buff);
 		free(buff);
@@ -80,5 +82,9 @@ void flip(char *ness)
 	{
 		say("Tails");
 	}
+}
+void Mine(char *ness)
+{
+	say("Literally found Hitler");
 }
 
