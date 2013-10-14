@@ -1,6 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include "../headers/client.h"
+#include <stdlib.h>
 typedef void (*BotCommand)(char*);
 typedef struct Command
 {

@@ -1,5 +1,5 @@
 #include "../headers/Functions.h"
-#include <stdlib.h>
+
 Command COMMANDS[] = {
 	{"say",&say,"Says [args]"},
 	{"quit",&quit, "Quits"},
