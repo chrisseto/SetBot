@@ -1,5 +1,4 @@
 #include "../headers/client.h"
-#include <stdlib.h>
 /*File client.c
 Contains methods to connect to an Irc server and interact with it
 C Sockets- Literally Hitler*/

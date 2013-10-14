@@ -2,16 +2,18 @@
 #define CLIENT_H
 #include "../headers/Functions.h"
 #include "../headers/config.h"
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <string.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #include <error.h>
+#include <stdio.h>
 #include <errno.h>
 #include <netdb.h>
-#include <unistd.h>
+
 
 extern const char* COMMAND_STRINGS[];
 
