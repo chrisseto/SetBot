@@ -1,30 +1,32 @@
 #include "../headers/Functions.h"
 
 Command COMMANDS[] = {
-	{"say",&say,"Says [args]"},
-	{"quit",&quit, "Quits"},
-	{"list",&list, "List Commands"},
-	{"roll",&roll, "Roll a dice with [args] sides"},
-	{"flip",&flip, "Flips a coin"},
-	{"Mine",&Mine, " "}
+	{"say",&say,"Says [args]",GENERAL},
+	{"quit",&quit, "Quits",ALL},
+	{"list",&list, "List Commands",GENERAL},
+	{"roll",&roll, "Roll a dice with [args] sides",GENERAL},
+	{"flip",&flip, "Flips a coin",GENERAL},
+	{"Mine",&Mine, " ",ELEVATED}
 };
 short COMMAND_LENGTH = 6; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
-//Make buffers with malloc and free <-TODO
+
 void say(char *message)
 {
-	char buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1];
+	char *buff = malloc(strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+1);
 	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
 	printf("%s: %s\n",NickName,message);
 	sendToServer(buff);
+	free(buff);
 }
 void quit(char *ness)
 {
 	printf("%s :Leaving\n",COMMAND_STRINGS[7]);
-	char buff[255];
+	char *buff = malloc(255);
 	sprintf(buff,"%s :Leaving\r\n",COMMAND_STRINGS[7]);
 	sendToServer(buff);
 	CONNECTED=0;
 	QUIT=1;
+	free(buff);
 }
 void pong(char *arg)
 {
@@ -36,14 +38,13 @@ void pong(char *arg)
 }
 void list(char * ness)
 {
-	char *buff=malloc(255);
+	char *buff=malloc(551); //Possible Overflow here....
 	int len = 0;
 	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
-		sprintf(buff,"%s: %s\r\n",COMMANDS[i].text,COMMANDS[i].description);
-		say(buff);
-		memset(buff,0,sizeof(buff));
+		sprintf(buff,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
 	}
+	say(buff);
 	free(buff);
 }
 void rpn(char* args)
