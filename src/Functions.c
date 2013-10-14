@@ -57,8 +57,8 @@ void roll(char* arg)
 	int num;
 	if((num = atoi(arg)) > 0)
 	{
-		int num = rand() % atoi(arg); //Also Should work
-		char *buff = malloc(255) + 1;
+		int num = (rand() % atoi(arg)) + 1; //Also Should work
+		char *buff = malloc(255);
 		sprintf(buff,"You Rolled %d",num);
 		say(buff);
 		free(buff);
