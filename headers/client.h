@@ -18,11 +18,11 @@
 extern const char* COMMAND_STRINGS[];
 
 int connectToServer();
-void makeConnectionPhrase(char* buff);
+static void makeConnectionPhrase(char* buff);
 int getNextLine();
 int sendToServer(char* message);
-int join();
-int getline();
-void parseUserCommand(char* args);
+static int join();
+static int getline();
+static void parseUserCommand(char* args);
 
 #endif

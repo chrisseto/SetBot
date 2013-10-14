@@ -6,6 +6,17 @@ C Sockets- Literally Hitler*/
 
 static int sock; //The socket descriptor (gasp) no one else gets to see it
 
+void IRCStart()
+{
+	if(connectToServer())
+		return;
+	while(getNextLine()) //Might update this so that msg is outside and just passed in as a buffer
+	{
+	}
+	printf("Disconnected");
+	
+}
+
 int connectToServer()
 {	
 	//Yuck structs this was god awful
@@ -43,7 +54,7 @@ int connectToServer()
 	printf("Connected to %s:%d\n",Server,Port);
 	return 1;
 } 
-void makeConnectionPhrase(char *buff)
+static void makeConnectionPhrase(char *buff)
 {
 	//Pretty straight forward here
 	sprintf(buff,"PASS %s\r\nNICK %s\r\nUSER %s\r\n",Pass,NickName,User);
@@ -58,7 +69,7 @@ int sendToServer(char* message)
 	}
 	return 1;
 }
-int join()
+static int join()
 {
 	char buff[255]; //This could also be smaller, unlike my friend group
 	sprintf(buff,"%s %s\r\n",COMMAND_STRINGS[6],Channel);
@@ -66,7 +77,7 @@ int join()
 	if(DEBUG)
 		printf("Joining %s\n",Channel);
 }
-void parse(char *msg)
+static void parse(char *msg)
 {
 	char *buff;
 	char *chunk[5];
@@ -86,12 +97,12 @@ void parse(char *msg)
 	}
 	if(strcmp(chunk[0],COMMAND_STRINGS[4])==0)
 	{
-		pong(chunk[1]);//This may be wrong... Will fix later (if broken)
+		pong(chunk[1]);
 	}
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
 		char *nick = strtok(chunk[0],"!"); //Maybe Right... hmm
-		printf("%s: %s\n",nick,chunk[3]+2);
+		printf("%s: %s\n",nick,chunk[3]+2); //Still in progress need to remove leading :
 		if(chunk[3][1] == TRIGGER)
 		{
 			parseUserCommand(chunk[3]);
@@ -106,7 +117,7 @@ void parse(char *msg)
 int getNextLine()
 {
 	char next;
-	char msg[551];
+	char *msg = malloc(551);
 	int i = 0;
 	while(read(sock,&next,1)>0 && i < 551)
 	{
@@ -114,6 +125,7 @@ int getNextLine()
 		{
 			msg[i] = '\0';				
 			parse(&msg);
+			memset(msg,0,551);
 			return 1;
 		}
 		else if(next != '\r')
@@ -122,11 +134,12 @@ int getNextLine()
 			i++;
 		}
 	}
+	free(msg);
 	//This function needs to be more refined
 	printf("Read 0 bytes from socket,Something went wrong\n");
 	return -1;
 }
-void parseUserCommand(char* args)
+static void parseUserCommand(char* args)
 {
 	char *backup = malloc(strlen(args)+1);
 	//memset(backup,0,strlen(args)+1); Shouldn't be needed all space is being written too.

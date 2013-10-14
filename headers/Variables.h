@@ -3,7 +3,6 @@
 /* FILES: Variables.h and Variables.c
 ** To remove the clutter from Config.c and Config.h
 ** Everything In here is simply a static variable that should not be changed
-** May or may not be used/removed.... still deciding
 */
 extern int QUIT;
 extern int CONNECTED;
