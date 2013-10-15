@@ -20,4 +20,8 @@ void Mine(char *args);
 void tribotjacking(char *args); //see below
 void rpn(char *args); //because why not
 //zombie mode see above
+//stab
+//set access
+//help
+//access required
 #endif

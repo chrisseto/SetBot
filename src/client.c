@@ -102,11 +102,12 @@ static void parse(char *msg)
 	}
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
-		char *nick = strtok(chunk[0],"!"); //Maybe Right... hmm
-		printf("%s: %s\n",nick+1,chunk[3]+1); //Still in progress need to remove leading :
+		char *nick = (strtok(chunk[0],"!"))++; //Maybe Right... hmm
+		if(SHOWMSG)
+			printf("%s: %s\n",nick,chunk[3]+1);
 		if(chunk[3][1] == TRIGGER)
 		{
-			parseUserCommand(chunk[3],nick+1);
+			parseUserCommand(chunk[3],nick);
 		}
 			
 	}

@@ -8,6 +8,7 @@ extern int QUIT;
 extern int CONNECTED;
 extern const int DEBUG;
 extern int INCHANNEL;
+extern cont int SHOWMSG;
 extern const char* COMMAND_STRINGS[]; 
 
 #endif
