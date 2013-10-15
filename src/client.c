@@ -102,7 +102,8 @@ static void parse(char *msg)
 	}
 	if(strcmp(chunk[1],COMMAND_STRINGS[0])==0)
 	{
-		char *nick = (strtok(chunk[0],"!"))++; //Maybe Right... hmm
+		char *nick = strtok(chunk[0],"!");
+		nick++;
 		if(SHOWMSG)
 			printf("%s: %s\n",nick,chunk[3]+1);
 		if(chunk[3][1] == TRIGGER)
@@ -149,9 +150,14 @@ static void parseUserCommand(char* args, char* user)
 	char *command = strtok(args," "); //FIX ME IM A DICK AND CUT OFF ALL THE SPACES
 	command+=2; //trims :[TRIGGER] leaving raw command
 	backup+=strlen(command)+3; //Removes :[TRIGGER][COMMAND][SPACE]
-	//printf("Command %s Backup %s %d\n",command,backup,strlen(backup)); Was for debugging Might add back in
-	for(int i = 0; i < COMMAND_LENGTH; i++) //Yeah.... need to fix this sizes... Const int maybe? short would be a bit less over head
+	if(DEBUG)
+		printf("Recieved command %s from %s with security level %d.",command,user,getUserControl(user));
+	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
+		if(strcmp(command,"access"))
+		{
+			COMMANDS[6].func(user);
+		}
 		if(strcmp(COMMANDS[i].text,command)==0)
 		{
 			if(getUserControl(user) >= COMMANDS[i].security)
