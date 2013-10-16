@@ -112,6 +112,11 @@ static void parse(char *msg)
 		}
 			
 	}
+	//This could be wrong....
+	if(strcmp(chunk[0], COMMAND_STRINGS[5])==0)
+	{
+		pong(chunk[3]);
+	}
 }
 int getNextLine()
 {

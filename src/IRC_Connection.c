@@ -65,6 +65,13 @@ int send_raw(char *message)
 	}
 	return 1;
 }
+int say_to_channel_(char *channel, char *message)
+{
+	char *buff = malloc(strlen(channel)+strlen(message)+10);
+	sprintf(buff,"PRVMSG %s :%s\r\n",channel,message);
+	send_raw(buff);
+	free(buff);
+}
 void pong(char *arg)
 {
 	char *buff = malloc(strlen(arg) + 9);
@@ -80,6 +87,29 @@ void read_line(char *buff)
 	//chunk into irc_message
 	//call call back
 	//free things?
+	char next;
+	char *msg = malloc(551);
+	int i = 0;
+	while(read(sock,&next,1)>0 && i < 551)
+	{
+		if(next == '\n')
+		{
+			msg[i] = '\0';				
+			parse(msg);
+			free(msg);
+			return 1;
+		}
+		else if(next != '\r')
+		{
+			msg[i] = next;
+			i++;
+		}
+	}
+	free(msg);
+	//This function needs to be more refined
+	if(DEBUG)
+		printf("Read 0 bytes from socket,Something went wrong\n");
+	return 0;
 }
 IRC_Message chunk_message(char* msg)
 {
