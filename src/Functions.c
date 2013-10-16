@@ -13,10 +13,13 @@ short COMMAND_LENGTH = 7; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dyn
 
 void say(char *message)
 {
-	char *buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
-	sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
-	printf("%s: %s\n",NickName,message);
-	sendToServer(buff);
+	if(strcmp(message,"")!=0)
+	{
+		char *buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
+		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
+		printf("%s: %s\n",NickName,message);
+		sendToServer(buff);
+	}
 }
 void quit(char *ness)
 {

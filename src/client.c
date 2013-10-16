@@ -145,18 +145,18 @@ int getNextLine()
 static void parseUserCommand(char* args, char* user)
 {
 	char *backup = malloc(strlen(args)+1);
-	//memset(backup,0,strlen(args)+1); Shouldn't be needed all space is being written too.
 	memcpy(backup,args,strlen(args)+1); //Could use strcpy here..... I might at some point in time
-	char *command = strtok(args," "); //FIX ME IM A DICK AND CUT OFF ALL THE SPACES
+	char *command = strtok(args," ");
 	command+=2; //trims :[TRIGGER] leaving raw command
 	backup+=strlen(command)+3; //Removes :[TRIGGER][COMMAND][SPACE]
 	if(DEBUG)
-		printf("Recieved command %s from %s with security level %d.",command,user,getUserControl(user));
+		printf("Recieved command \"%s\" from %s with security level %d.\n",command,user,getUserControl(user));
 	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
-		if(strcmp(command,"access"))
+		if(strcmp(command,"access")==0)
 		{
 			COMMANDS[6].func(user);
+			break;
 		}
 		if(strcmp(COMMANDS[i].text,command)==0)
 		{
@@ -171,7 +171,7 @@ BOT_ACCESS getUserControl(char *name)
 {
 	for(int i = 0; i < REGISTEREDUSERS; i++)
 	{
-		if(strcmp(ALLOWEDUSERS[i].handle,name))
+		if(strcmp(ALLOWEDUSERS[i].handle,name)==0)
 			return ALLOWEDUSERS[i].access;
 	}
 	return GENERAL;
