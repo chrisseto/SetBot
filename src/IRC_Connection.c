@@ -1,19 +1,16 @@
 #include "../headers/IRC_Connection.h"
 
-void IRC_init(IRC *irc, char *Server, int Port, char* Nick, char* Pass)
-{
-	irc->server = Server;
-	irc->port = Port;
-	irc->nick = Nick;
-	irc->pass = Pass;
-	char *buff = malloc((strlen(Nick)+1)*4);
-	sprintf(buff,"%s %s %s %s",Nick,Nick,Nick,Nick);
-	irc->user = buff;
-	free(buff);
-	irc->connected = 0;
-	irc->socket = 0;
-}
 
+
+void start_IRC_loop(IRC *irc, char *channel) //channel will be expanded or overloaded later
+{
+	connect_to_server(irc);
+	join_channel(channel);
+	//char *buff = malloc(?)
+	//while getline
+	//parse input call callbacks etc
+	//endwhile
+}
 
 int connect_to_server(IRC *irc)
 {

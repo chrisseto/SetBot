@@ -26,3 +26,27 @@ int list_contains(List *list, char *search)
 {
 	
 }
+
+void free_list(List *list)
+{
+
+}
+
+void IRC_init(IRC *irc, char *Server, int Port, char* Nick, char* Pass)
+{
+	irc->server = Server;
+	irc->port = Port;
+	irc->nick = Nick;
+	irc->pass = Pass;
+	char *buff = malloc((strlen(Nick)+1)*4);
+	sprintf(buff,"%s %s %s %s",Nick,Nick,Nick,Nick);
+	irc->user = buff;
+	free(buff);
+	irc->connected = 0;
+	irc->socket = 0;
+}
+
+void free_irc(IRC *irc)
+{
+
+}

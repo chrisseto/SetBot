@@ -26,7 +26,7 @@ typedef struct IRC
 	char *nick;
 	char *user;
 	int connected;
-	Channel_List channels;
+	List channels;
 	void (*Message_Recieved)(IRC_Message*);
 	void (*Bot_Messaged)(IRC_Message*);
 } IRC;
