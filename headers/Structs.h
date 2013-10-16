@@ -24,4 +24,6 @@ typedef struct Command
 	char *description;
 	BOT_ACCESS security;
 } Command;
+
+
 #endif
