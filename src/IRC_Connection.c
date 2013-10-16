@@ -61,16 +61,44 @@ int send_raw(char *message)
 	if(write(sock, message, strlen(message)) < 0)
 	{
 		printf("ERROR: Failed to write to socket %d\n",errno);
-		return -1;
+		return 0;
 	}
 	return 1;
 }
 void pong(char *arg)
 {
-	if(DEBUG) 
-		printf("%s",buff);
 	char *buff = malloc(strlen(arg) + 9);
 	sprintf(buff,"PONG %s\r\n",arg);
+	if(DEBUG) 
+		printf("%s",buff);
 	send_raw(buff);
 	free(buff);
+}
+void read_line(char *buff)
+{
+	//read in line
+	//chunk into irc_message
+	//call call back
+	//free things?
+}
+IRC_Message chunk_message(char* msg)
+{
+	IRC_M chunked;
+	char *buff;
+	char *chunk[5];
+	buff = strtok(msg," ");
+	chunk[0] = buff;
+	buff = strtok(NULL," ");
+	chunk[1] = buff;
+	buff = strtok(NULL," ");
+	chunk[2] = buff;
+	buff = strtok(NULL,"\n");
+	if(buff != NULL)
+		chunk[3] = buff;
+	//Load up irc_m
+}
+//args TBA
+Message_Type get_message_type(char *chunk1, char *chunk2)
+{
+	
 }

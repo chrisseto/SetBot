@@ -112,10 +112,6 @@ static void parse(char *msg)
 		}
 			
 	}
-	if(strcmp(chunk[0], COMMAND_STRINGS[5])==0)
-	{
-		pong(chunk[3]);
-	}
 }
 int getNextLine()
 {

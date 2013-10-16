@@ -1,6 +1,6 @@
 #ifndef IRC_CONNECTION_H
 #define IRC_CONNECTION_H
-
+//Everything will return 1 on success and 0 on failure
 #define MAXHOOKS 5
 
 typedef enum
