@@ -1,22 +1,26 @@
 #include "../headers/IRC_Connection.h"
 
-int connect_to_server(char *Server, int Port, char *Nick)
+void IRC_init(IRC *irc, char *Server, int Port, char* Nick, char* Pass)
 {
-	//Loading up the IRC struct for later use
-	strcpy(_server.server,*Server);
-	_server.port = Port;
-	strcpy(_server.nick, Nick);
-	_server.pass = "none";
-	char *buff = malloc((strlen(nick)+1)*4);
+	irc->server = Server;
+	irc->port = Port;
+	irc->nick = Nick;
+	irc->pass = Pass;
+	char *buff = malloc((strlen(Nick)+1)*4);
 	sprintf(buff,"%s %s %s %s",Nick,Nick,Nick,Nick);
-	strcpy(_server.user,buff);
+	irc->user = buff;
 	free(buff);
-	//All loaded up
+	irc->connected = 0;
+	irc->socket = 0;
+}
 
+
+int connect_to_server(IRC *irc)
+{
 	//Creating socket and other networking black magic
 	struct sockaddr_in server;
 	struct hostent *host;
-	host = gethostbyname(Server);
+	host = gethostbyname(irc->server);
 	if(host == NULL)
 	{
 		printf("EROR: No such host\n");
@@ -24,13 +28,13 @@ int connect_to_server(char *Server, int Port, char *Nick)
 	}
 	memcpy(&server.sin_addr,host->h_addr_list[0],host->h_length);
 	server.sin_family = AF_INET;
-	server.sin_port = htons( Port );
-	sock = socket(AF_INET , SOCK_STREAM , 0);
-	if(sock < 0){
+	server.sin_port = htons( irc->port );
+	irc->socket = socket(AF_INET , SOCK_STREAM , 0);
+	if(irc->socket < 0){
 		printf("ERROR: Could not open socket %d\n",errno);
 		return 0;
 	}
-	if(connect(sock , (struct sockaddr *)&server , sizeof(server))< 0)
+	if(connect(irc->socket , (struct sockaddr *)&server , sizeof(server))< 0)
 	{
 		printf("ERROR: could not connect to server %d\n",errno);
 		return 0;
@@ -38,13 +42,13 @@ int connect_to_server(char *Server, int Port, char *Nick)
 	//<\black magic>
 
 	//Sending information to join sever
-	buff = malloc(strlen(pass)+strlen(nick)+strlen(user)+21);
-	sprintf(buff,"PASS %s\r\nNICK %s\r\nUSER %s\r\n",_server.pass,_server.nick,_server.user);
+	buff = malloc(strlen(irc->pass)+strlen(irc->nick)+strlen(irc->user)+21);
+	sprintf(buff,"PASS %s\r\nNICK %s\r\nUSER %s\r\n",irc->pass,irc->nick,irc->user);
 	send_raw(buff);
 	free(buff);
 	if(DEBUG)
-		printf("Connected to %s:%d\n",Server,Port);
-	CONNECTED = 1;
+		printf("Connected to %s:%d\n",irc->server,irc->port);
+	irc->connected = 1;
 	return 1;
 }
 int join_channel(char *channel)
@@ -126,9 +130,4 @@ IRC_Message chunk_message(char* msg)
 	if(buff != NULL)
 		chunk[3] = buff;
 	//Load up irc_m
-}
-//args TBA
-Message_Type get_message_type(char *chunk1, char *chunk2)
-{
-	
 }

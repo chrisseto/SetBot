@@ -13,9 +13,15 @@ NOTICE = 4,
 MOTD = 5
 } Message_Type;
 
+typedef struct IRC_Channel
+{
+	char *channel;
+	char *users[]; //Could be a big string
+} IRC_Channel;
+
 typedef struct IRC_Message
 {
-	Message_Type type;
+	IRC_Channel *orgin;
 	char *sender;
 	char *message;
 } IRC_Message;
@@ -24,17 +30,15 @@ typedef struct IRC
 {
 	char *server;
 	int port;
+	int socket;
 	char *pass;
 	char *nick;
 	char *user;
+	int connected;
+	IRC_Channel *channels[];
+	void (*Message_Recieved)(IRC_Message*);
+	void (*Bot_Messaged)(IRC_Message*);
 } IRC;
-
-typedef void (*IRCcallback)(IRC_Message*);
-
-static IRC _server;
-static int sock,CONNECTED;
-
-static IRCcallback[] callbacks; 
 
 int connect_to_server(char *server, int port);
 int join_channel(char *channel);
