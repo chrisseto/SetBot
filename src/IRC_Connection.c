@@ -51,18 +51,20 @@ int connect_to_server(IRC *irc)
 	irc->connected = 1;
 	return 1;
 }
-int join_channel(char *channel)
+int join_channel(IRC *irc, char *channel)
 {
 	if(DEBUG)
-		printf("Joining %s\n",Channel);
+		printf("Joining %s\n",channel);
 	char *buff = malloc(strlen(channel)+7);
 	sprintf(buff,"JOIN %s\r\n",channel);
 	send_raw(buff);
-	free(buff);	
+	free(buff);
+	//Add check to make sure of channel joining
+	add_element(irc->channels,channel);	
 }
-int send_raw(char *message)
+int send_raw(IRC *irc, char *message)
 {
-	if(write(sock, message, strlen(message)) < 0)
+	if(write(irc->socket, message, strlen(message)) < 0)
 	{
 		printf("ERROR: Failed to write to socket %d\n",errno);
 		return 0;
