@@ -6,6 +6,31 @@
 #include <stdlib.h>
 #include <time.h>
 
+typedef void (*BotCommand)(char*);
+
+typedef enum 
+{
+ALL = 4,
+ELEVATED = 3,
+GENERAL = 2,
+LIMITED = 1,
+NONE = 0
+} BOT_ACCESS;
+
+typedef struct USER
+{
+	char *handle;
+	BOT_ACCESS access;
+} USER;
+
+typedef struct Command
+{
+	char *text;
+	BotCommand func;
+	char *description;
+	BOT_ACCESS security;
+} Command;
+
 extern Command COMMANDS[];
 extern short COMMAND_LENGTH; //Laziness is bestness
 void say(char *args);
