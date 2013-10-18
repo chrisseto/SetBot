@@ -11,33 +11,30 @@ Command COMMANDS[] = {
 };
 short COMMAND_LENGTH = 7; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 
+const char* COMMAND_STRINGS[] = {
+	"PRIVMSG", //0
+	"PASS", //1
+	"NICK", //2
+	"USER", //3
+	"PING", //4
+	"PONG", //5
+	"JOIN", //6
+	"QUIT" //7
+};
+
 void say(IRC_Message *msg)
 {
 	if(strcmp(msg->message,"")!=0)
 	{
 		char *buff[strlen(msg->message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
-		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,msg->message);
+		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],msg->target,msg->message);
 		printf("%s: %s\n",NickName,msg->message);
-		sendToServer(buff);
+		send_raw(&bot,buff);
 	}
 }
-void quit(IRC_Message *msg) //change to Circ quit
+void quit(IRC_Message *msg)
 {
-	printf("%s :Leaving\n",COMMAND_STRINGS[7]);
-	char *buff = malloc(255);
-	sprintf(buff,"%s :Leaving\r\n",COMMAND_STRINGS[7]);
-	sendToServer(buff);
-	CONNECTED=0;
-	QUIT=1;
-	free(buff);
-}
-void pong(IRC_Message *msg) //can be removed
-{
-	char *buff = malloc(strlen(arg)+5);
-	sprintf(buff,"PONG %s\r\n",arg+1);
-	printf("%s",buff);
-	sendToServer(buff);
-	free(buff);
+	IRC_quit(&bot,"Leaving");
 }
 void list(IRC_Message *msg)
 {
@@ -48,7 +45,7 @@ void list(IRC_Message *msg)
 		sprintf(buff + len,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
 		len+=(strlen(buff)-len); //Haha! clever math... also meta
 	}
-	say(buff);
+	say_to_channel(&bot,Channel,buff);
 }
 void rpn(IRC_Message *msg)
 {
@@ -58,19 +55,19 @@ void roll(IRC_Message *msg)
 {
 	srand(time(NULL)); //PLANT THE SEEDS
 	int num;
-	if((num = atoi(arg)) > 0)
+	if((num = atoi(msg->message)) > 0)
 	{
-		int num = (rand() % atoi(arg)) + 1; //Also Should work
+		num = (rand() % num) + 1; //Also Should work
 		char *buff = malloc(255);
 		sprintf(buff,"You Rolled %d",num);
-		say(buff);
+		say_to_channel(&bot,Channel,buff);
 		free(buff);
 	}
 	else
 	{
 		char *buff = malloc(255);
 		sprintf(buff,"Roll requires a positive integer");
-		say(buff);
+		say_to_channel(&bot,Channel,buff);
 		free(buff);
 	}
 } 
@@ -80,40 +77,40 @@ void flip(IRC_Message *msg)
 	int num;
 	if((num = rand() % 2 + 1) == 1)
 	{
-		say("Heads");
+		say_to_channel(&bot,Channel,"Heads");
 	}
 	else
 	{
-		say("Tails");
+		say_to_channel(&bot,Channel,"Tails");
 	}
 }
 void Mine(IRC_Message *msg)
 {
-	say("Literally found Hitler");
+	say_to_channel(&bot,Channel,"Literally found Hitler");
 }
 void getaccess(IRC_Message *msg)
 {
 	char *buff = malloc(256);
-	sprintf(buff,"%s: ",arg);
-	switch(getUserControl(arg))
+	sprintf(buff,"%s: ",msg->message);
+	switch(getUserControl(msg->message))
 	{
 		case 0:
-			sprintf(buff+strlen(arg)+2,"NONE");
+			sprintf(buff+strlen(msg->message)+2,"NONE");
 			break;
 		case 1:
-			sprintf(buff+strlen(arg)+2,"LIMITED");
+			sprintf(buff+strlen(msg->message)+2,"LIMITED");
 			break;
 		case 2:
-			sprintf(buff+strlen(arg)+2,"GENERAL");
+			sprintf(buff+strlen(msg->message)+2,"GENERAL");
 			break;
 		case 3:
-			sprintf(buff+strlen(arg)+2,"ELEVATED");
+			sprintf(buff+strlen(msg->message)+2,"ELEVATED");
 			break;
 		case 4:
-			sprintf(buff+strlen(arg)+2,"ALL");
+			sprintf(buff+strlen(msg->message)+2,"ALL");
 			break;
 	}
-	say(buff);
+	say_to_channel(&bot,Channel,buff);
 	free(buff);
 }
 

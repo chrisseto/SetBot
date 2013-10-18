@@ -1,25 +1,15 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
-#include "../headers/Variables.h"
+
+#include "IRC_Connection.h"
+#include "Security.h"
+#include "config.h"
 #include <stdlib.h>
 #include <time.h>
 
+extern IRC bot; //This is pretty ugly but it will work for now
+
 typedef void (*BotCommand)(IRC_Message*);
-
-typedef enum 
-{
-	ALL = 4,
-	ELEVATED = 3,
-	GENERAL = 2,
-	LIMITED = 1,
-	NONE = 0
-} BOT_ACCESS;
-
-typedef struct USER
-{
-	char *handle;
-	BOT_ACCESS access;
-} USER;
 
 typedef struct Command
 {
@@ -35,7 +25,6 @@ extern short COMMAND_LENGTH; //Laziness is bestness
 void say(IRC_Message *message);
 void quit(IRC_Message *message);
 void list(IRC_Message *message);
-void pong(IRC_Message *message);
 void getaccess(IRC_Message *message);
 void ping(IRC_Message *message);
 void roll(IRC_Message *message);

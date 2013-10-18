@@ -21,12 +21,4 @@ void Bot_Messaged(IRC_Message *msg)
 	//Still needs to be implemented
 }
 
-BOT_ACCESS getUserControl(char *name)
-{
-	for(int i = 0; i < REGISTEREDUSERS; i++)
-	{
-		if(strcmp(ALLOWEDUSERS[i].handle,name)==0)
-			return ALLOWEDUSERS[i].access;
-	}
-	return GENERAL;
-}
+

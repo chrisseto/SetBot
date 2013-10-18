@@ -1,6 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
-#include "../headers/Structs.h"
+#include "Security.h"
 extern const char* Server;
 extern const int Port;
 extern const char* NickName;

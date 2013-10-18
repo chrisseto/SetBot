@@ -1,15 +1,13 @@
-#include "../headers/IRC_Connection.h"
+#include "../headers/Functions.h"
 #include "../headers/config.h"
+#include "../headers/Parse.h"
 
-//TODO
-//Make functions more comprehensive
-//BeginLoop()
-//FIX ARG PARSING
-//cuts off at first space...
+IRC bot; //Not the best choice but its happening
+
 void main(int argc, char *args[])
 {
-	IRC bot;
-	IRC_init(&bot,Server,Port,Nick,Pass);
+	
+	IRC_init(&bot,"chat.freenode.net",8000,"SetBot","none");//work in progress
 	bot.Message_Recieved = &Message_Recieved;
 	bot.Bot_Messaged = &Bot_Messaged;
 	Start_IRC_Loop(&bot,Channel);
