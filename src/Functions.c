@@ -11,17 +11,17 @@ Command COMMANDS[] = {
 };
 short COMMAND_LENGTH = 7; //ALWAYS CHANGE TO REFLECT ABOVE ^ //Maybe be made dynamic later on
 
-void say(char *message)
+void say(IRC_Message *msg)
 {
-	if(strcmp(message,"")!=0)
+	if(strcmp(msg->message,"")!=0)
 	{
-		char *buff[strlen(message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
-		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,message);
-		printf("%s: %s\n",NickName,message);
+		char *buff[strlen(msg->message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
+		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],Channel,msg->message);
+		printf("%s: %s\n",NickName,msg->message);
 		sendToServer(buff);
 	}
 }
-void quit(char *ness)
+void quit(IRC_Message *msg) //change to Circ quit
 {
 	printf("%s :Leaving\n",COMMAND_STRINGS[7]);
 	char *buff = malloc(255);
@@ -31,7 +31,7 @@ void quit(char *ness)
 	QUIT=1;
 	free(buff);
 }
-void pong(char *arg)
+void pong(IRC_Message *msg) //can be removed
 {
 	char *buff = malloc(strlen(arg)+5);
 	sprintf(buff,"PONG %s\r\n",arg+1);
@@ -39,7 +39,7 @@ void pong(char *arg)
 	sendToServer(buff);
 	free(buff);
 }
-void list(char * ness)
+void list(IRC_Message *msg)
 {
 	char buff[551]; //Possible Overflow here.... also doesnt like malloc
 	int len = 0;
@@ -50,11 +50,11 @@ void list(char * ness)
 	}
 	say(buff);
 }
-void rpn(char* args)
+void rpn(IRC_Message *msg)
 {
 	//There will be another c file for this let me tell you....
 }
-void roll(char* arg)
+void roll(IRC_Message *msg)
 {
 	srand(time(NULL)); //PLANT THE SEEDS
 	int num;
@@ -74,7 +74,7 @@ void roll(char* arg)
 		free(buff);
 	}
 } 
-void flip(char *ness)
+void flip(IRC_Message *msg)
 {
 	srand(time(NULL)); //PLANT THE SEEDS
 	int num;
@@ -87,11 +87,11 @@ void flip(char *ness)
 		say("Tails");
 	}
 }
-void Mine(char *ness)
+void Mine(IRC_Message *msg)
 {
 	say("Literally found Hitler");
 }
-void getaccess(char *arg)
+void getaccess(IRC_Message *msg)
 {
 	char *buff = malloc(256);
 	sprintf(buff,"%s: ",arg);

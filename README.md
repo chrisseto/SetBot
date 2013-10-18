@@ -13,3 +13,4 @@ To Do
 * Stdin commands
 * better logging and logging options
 * Config -> file
+* Created a better public api for Circ
