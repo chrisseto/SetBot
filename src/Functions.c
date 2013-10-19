@@ -91,23 +91,23 @@ void Mine(IRC_Message *msg)
 void getaccess(IRC_Message *msg)
 {
 	char *buff = malloc(256);
-	sprintf(buff,"%s: ",msg->message);
-	switch(getUserControl(msg->message))
+	sprintf(buff,"%s: ",msg->sender);
+	switch(getUserControl(msg->sender))
 	{
 		case 0:
-			sprintf(buff+strlen(msg->message)+2,"NONE");
+			sprintf(buff+strlen(msg->sender)+2,"NONE");
 			break;
 		case 1:
-			sprintf(buff+strlen(msg->message)+2,"LIMITED");
+			sprintf(buff+strlen(msg->sender)+2,"LIMITED");
 			break;
 		case 2:
-			sprintf(buff+strlen(msg->message)+2,"GENERAL");
+			sprintf(buff+strlen(msg->sender)+2,"GENERAL");
 			break;
 		case 3:
-			sprintf(buff+strlen(msg->message)+2,"ELEVATED");
+			sprintf(buff+strlen(msg->sender)+2,"ELEVATED");
 			break;
 		case 4:
-			sprintf(buff+strlen(msg->message)+2,"ALL");
+			sprintf(buff+strlen(msg->sender)+2,"ALL");
 			break;
 	}
 	say_to_channel(&bot,Channel,buff);
