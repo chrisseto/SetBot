@@ -1,4 +1,4 @@
-#include "../headers/config.h"
+#include "../include/config.h"
 
 const char* Server = "chat.freenode.net";
 const int Port = 8000;

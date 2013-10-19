@@ -1,4 +1,4 @@
-#include "../headers/IRC_Types.h"
+#include "../include/IRC_Types.h"
 
 //everything here needs better error handling
 

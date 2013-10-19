@@ -1,4 +1,4 @@
-#include "../headers/Functions.h"
+#include "../include/Functions.h"
 
 Command COMMANDS[] = {
 	{"say",&say,"Says [args]",GENERAL},
