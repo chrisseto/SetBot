@@ -85,5 +85,11 @@ void print_message(IRC_Message *msg)
 }
 
 
-
+void free_irc_message(IRC_Message *msg)
+{
+	msg->target = NULL;
+	msg->sender = NULL;
+	msg->message = NULL;
+	msg->type = -1;	
+}
 

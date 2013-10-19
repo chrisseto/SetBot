@@ -7,7 +7,7 @@ void start_IRC_loop(IRC *irc, char *channel) //channel will be expanded or overl
 	connect_to_server(irc);
 	join_channel(irc,channel);
 	char *buff = malloc(MAXMESSAGESIZE);
-	IRC_Message temp;
+	IRC_Message temp; //Needs to be cleaned out at the end of the loop
 	while(next_line(irc,buff) && irc->connected)
 	{
 		temp = chunk_message(buff);
@@ -28,6 +28,7 @@ void start_IRC_loop(IRC *irc, char *channel) //channel will be expanded or overl
 			default:
 				break;
 		}
+		free_irc_message(&temp);
 	}
 	free(buff);
 }
@@ -89,8 +90,8 @@ int send_raw(IRC *irc, char *message)
 }
 int say_to_channel(IRC *irc, char *channel, char *message)
 {
-	char *buff = malloc(strlen(channel)+strlen(message)+10);
-	sprintf(buff,"PRVMSG %s :%s\r\n",channel,message);
+	char *buff = malloc(strlen(channel)+strlen(message)+11);
+	sprintf(buff,"PRIVMSG %s :%s\r\n",channel,message);
 	send_raw(irc,buff);
 	free(buff);
 	return 1;
