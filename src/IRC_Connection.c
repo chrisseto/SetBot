@@ -11,9 +11,7 @@ void start_IRC_loop(IRC *irc, char *channel) //channel will be expanded or overl
 	while(next_line(irc,buff) && irc->connected)
 	{
 		temp = chunk_message(buff);
-		#ifdef LOGGING
-			print_message(&temp);
-		#endif
+			//print_message(&temp);
 		switch(temp.type)
 		{
 			case PRIVMSG:
