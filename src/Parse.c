@@ -1,6 +1,6 @@
 #include "../include/Parse.h"
 
-void Message_Recieved(IRC_Message *msg)
+void Message_Recieved(IRC_Message *msg)//Needs to be cleaned up
 {
 	//printf("%s: %s\n",msg->sender,msg->message);
 	if(msg->message[0]==TRIGGER)

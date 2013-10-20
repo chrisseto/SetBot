@@ -26,7 +26,7 @@ void say(IRC_Message *msg)
 {
 	if(strcmp(msg->message,"")!=0)
 	{
-		char *buff[strlen(msg->message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
+		char buff[strlen(msg->message)+strlen(Channel)+strlen(COMMAND_STRINGS[0])+4];
 		sprintf(buff,"%s %s :%s\r\n",COMMAND_STRINGS[0],msg->target,msg->message);
 		printf("%s: %s\n",NickName,msg->message);
 		send_raw(&bot,buff);
@@ -42,7 +42,7 @@ void list(IRC_Message *msg)
 	int len = 0;
 	for(int i = 0; i < COMMAND_LENGTH; i++)
 	{
-		sprintf(buff + len,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
+		snprintf(buff + len,551,"[%s: %s] ",COMMANDS[i].text,COMMANDS[i].description);
 		len+=(strlen(buff)-len); //Haha! clever math... also meta
 	}
 	say_to_channel(&bot,Channel,buff);
