@@ -5,7 +5,8 @@ void Message_Recieved(IRC_Message *msg)
 	//printf("%s: %s\n",msg->sender,msg->message);
 	if(msg->message[0]==TRIGGER)
 	{
-		char *comand;
+		printf("%s\n",msg->sender);
+		char comand[strlen(msg->message)];
 		strcpy(comand,msg->message);
 		char *command = strtok(comand," ");
 		msg->message += strlen(command) + 1;

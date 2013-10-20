@@ -90,7 +90,7 @@ int send_raw(IRC *irc, char *message)
 }
 int say_to_channel(IRC *irc, char *channel, char *message)
 {
-	char *buff = malloc(strlen(channel)+strlen(message)+11);
+	char *buff = malloc(strlen(channel)+strlen(message)+12);
 	sprintf(buff,"PRIVMSG %s :%s\r\n",channel,message);
 	send_raw(irc,buff);
 	free(buff);
